@@ -11,7 +11,6 @@ MARBLE_RADIUS = 15
 SPEED = 5
 
 # Colors
-WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 PINK = (255, 105, 180)  # Define pink color
 
@@ -92,7 +91,7 @@ def main():
             marble_pos = new_marble_pos
 
         # Clear the screen
-        screen.fill(WHITE)
+        screen.fill(PINK)
 
         # Draw the maze and the marble
         draw_maze()
@@ -103,4 +102,4 @@ def main():
         pygame.time.Clock().tick(60)
 
 if __name__ == "__main__":
-    main()
+    main() 

@@ -31,3 +31,8 @@ The game created can be created or installed throught the following procedure:
 3. This project provided hands-on experience with Pygame, teaching the developer essential skills in game programming, rendering, and event handling.
 # What's Next?
 This structure could be expanded with additional game features like levels, timers, or goals, enhancing the gameplay experience.
+Collectibles: Introduce collectible items that players can pick up for points or power-ups.
+Levels: Create multiple levels with increasing difficulty.
+Timers: Add a timer to challenge players to complete the maze within a certain time.
+Goals: Implement objectives such as reaching a specific point in the maze to win.
+Sound Effects: Add sound effects for collecting items, collisions, and winning the game to enhance player experience.
