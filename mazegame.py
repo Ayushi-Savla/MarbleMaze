@@ -12,6 +12,7 @@ SPEED = 5
 
 # Colors
 BLACK = (0, 0, 0)
+WHITE = (255, 255, 255)
 PINK = (255, 105, 180)  # Define pink color
 
 # Create the screen
@@ -87,7 +88,7 @@ def main():
             marble_pos = new_marble_pos
 
         # Clear the screen
-        screen.fill(PINK)
+        screen.fill(WHITE)
 
         # Draw the maze and the marble
         draw_maze()
