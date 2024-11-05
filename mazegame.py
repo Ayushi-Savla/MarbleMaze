@@ -10,7 +10,6 @@ CELL_SIZE = 40
 MARBLE_RADIUS = 15
 SPEED = 5
 
-# Colors
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 PINK = (255, 105, 180)  # Define pink color
@@ -71,6 +70,7 @@ def main():
                 pygame.quit()
                 sys.exit()
 
+        # to initialise the keys used to control the sphere
         keys = pygame.key.get_pressed()
         new_marble_pos = marble_pos.copy()
 
