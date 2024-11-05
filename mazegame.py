@@ -23,6 +23,7 @@ pygame.display.set_caption("Marble Maze")
 marble_pos = [CELL_SIZE * 3 + CELL_SIZE // 2, CELL_SIZE * 1 + CELL_SIZE // 2]  # Start in an open space
 
 # Maze layout
+#This maze drawing outlines how the maze will look
 maze = [
     "#################",
     "#       #       #",
@@ -31,6 +32,8 @@ maze = [
     "# # ### # # # # #",
     "# # #   #   # # #",
     "# # ## ##  ###  #",
+    "#               #",
+    "######## ########",
     "#               #",
     "#################",
 ]
@@ -41,6 +44,7 @@ def draw_maze():
         for x, cell in enumerate(row):
             if cell == "#":
                 pygame.draw.rect(screen, BLACK, (x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE))
+                #This part translates the appearance of the code to what is demonstrated in the picture intead of just # signs
 
 # Function to draw a gradient circle to simulate a sphere
 def draw_sphere(position):
