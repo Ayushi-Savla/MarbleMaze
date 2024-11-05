@@ -74,6 +74,7 @@ def main():
                 pygame.quit()
                 sys.exit()
 
+        # the keys to control the sphere
         keys = pygame.key.get_pressed()
         new_marble_pos = marble_pos.copy()
 
