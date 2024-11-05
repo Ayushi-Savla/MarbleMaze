@@ -10,7 +10,7 @@ CELL_SIZE = 40
 MARBLE_RADIUS = 15
 SPEED = 5
 
-WHITE = (255, 255, 255)
+# Colors
 BLACK = (0, 0, 0)
 PINK = (255, 105, 180)  # Define pink color
 
@@ -22,14 +22,17 @@ pygame.display.set_caption("Marble Maze")
 marble_pos = [CELL_SIZE * 3 + CELL_SIZE // 2, CELL_SIZE * 1 + CELL_SIZE // 2]  # Start in an open space
 
 # Maze layout
+#This maze drawing outlines how the maze will look
 maze = [
     "#################",
     "#       #       #",
-    "# ##### # ##### #",
+    "# ##### # ## ## #",
     "# #   #   #   # #",
     "# # ### # # # # #",
     "# # #   #   # # #",
-    "# # #####  ###  #",
+    "# # ## ##  ###  #",
+    "#               #",
+    "######## ########",
     "#               #",
     "#################",
 ]
@@ -40,6 +43,7 @@ def draw_maze():
         for x, cell in enumerate(row):
             if cell == "#":
                 pygame.draw.rect(screen, BLACK, (x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE))
+                #This part translates the appearance of the code to what is demonstrated in the picture intead of just # signs
 
 # Function to draw a gradient circle to simulate a sphere
 def draw_sphere(position):
@@ -70,7 +74,6 @@ def main():
                 pygame.quit()
                 sys.exit()
 
-        # to initialise the keys used to control the sphere
         keys = pygame.key.get_pressed()
         new_marble_pos = marble_pos.copy()
 
@@ -88,7 +91,7 @@ def main():
             marble_pos = new_marble_pos
 
         # Clear the screen
-        screen.fill(WHITE)
+        screen.fill(PINK)
 
         # Draw the maze and the marble
         draw_maze()
@@ -99,4 +102,4 @@ def main():
         pygame.time.Clock().tick(60)
 
 if __name__ == "__main__":
-    main()
+    main() 
