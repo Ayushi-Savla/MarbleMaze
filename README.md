@@ -1,1 +1,1 @@
-# CG_Project
+MAZE PROJECT
