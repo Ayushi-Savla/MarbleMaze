@@ -44,7 +44,7 @@ def draw_maze():
         for x, cell in enumerate(row):
             if cell == "#":
                 pygame.draw.rect(screen, BLACK, (x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE))
-                #This part translates the appearance of the code to what is demonstrated in the picture intead of just # signs
+                #This part translates the appearance of the code to what is demonstrated in the picture instead of just # signs
 
 # Function to draw a gradient circle to simulate a sphere
 def draw_sphere(position):
@@ -104,4 +104,8 @@ def main():
         pygame.time.Clock().tick(60)
 
 if __name__ == "__main__":
-    main() 
+    main()
+
+if __name__ == "__main__":
+    main()
+
