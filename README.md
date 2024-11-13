@@ -4,14 +4,14 @@
 This game is a simple maze navigation game called "Marble Maze." The player controls a marble and navigates it through a maze. The goal is to move the marble around the maze without colliding with walls.
 # Dependencies
 To build this game, the following dependencies/packages were used:
-  Pygame to generate the game and the layout.
-  Sys to provide access to some variables used or maintained by the interpreter and to functions that interact strongly with the interpreter.
+  1. Pygame to generate the game and the layout.
+  2. Sys to provide access to some variables used or maintained by the interpreter and to functions that interact strongly with the interpreter.
 # How we built it
 In this project, we built a simple maze game where a player navigates a marble using the arrow keys. Key techniques include grid-based collision detection, layered rendering for a 3D marble effect, and real-time input handling. 
 # Installation and Running
 The game created can be created or installed throught the following procedure:
   1. Open your terminal on a python text editor - pycharm is used in our case.
-  2. Run the `pip` command to install the `pygame` and `sys` library - pip install pygame sys.
+  2. Run the `pip` command to install the `pygame` and `sys` library - `pip install pygame sys`.
   3. Download the file from the repository or copy the code into the text editor.
   4. Run the program from the `main` function.
 # Code Overview
