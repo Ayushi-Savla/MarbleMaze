@@ -1,5 +1,6 @@
 import pygame
 import sys
+import random
 
 # Initialize Pygame
 pygame.init()
@@ -31,56 +32,77 @@ font = pygame.font.Font(None, 36)
 marble_pos = [CELL_SIZE * 3 + CELL_SIZE // 2, CELL_SIZE * 1 + CELL_SIZE // 2]  # Start in an open space
 
 # Maze layout
-#This maze drawing outlines how the maze will look
 mazes = [
     [
         "#################",
         "#       #       #",
         "# ##### # ## ## #",
-        "# #   # C # G # #",
+        "# #   #   # G # #",
         "# # ### # # # # #",
-        "# #   C #   #   #",
+        "# #             #",
         "# # ## ##  ###  #",
-        "#   C           #",
+        "#               #",
         "######## ########",
         "#               #",
         "#################",
     ],
     [
         "#################",
-        "#C      ##      #",
+        "#        #      #",
         "# ##### ## ##### #",
-        "#G#   #    C   # #",
+        "# #   #        # #",
         "# # # ##### ##### #",
-        "# # #C    C   #  #",
+        "# # #         #  #",
         "# ### #### #### ##",
         "#       #        #",
         "######## #########",
-        "#       C         #",
+        "#                 #",
         "###################",
     ],
     [
         "#################",
-        "#    C   #      #",
+        "#        #      #",
         "### #### ###### #",
-        "# C#   #   C #G #",
+        "#  #   #     # G #",
         "#  ##### ##### ##",
-        "#    C     C    #",
+        "#               #",
         "##### #### ##### #",
-        "#     #   C      #",
+        "#     #          #",
         "####### ##########",
-        "#   C            #",
+        "#                 #",
         "###################",
     ]
 ]
 
+# Function to randomize `C` positions in the maze
+def randomize_c_positions(maze, num_items=5):
+    empty_positions = []
+    for y, row in enumerate(maze):
+        for x, cell in enumerate(row):
+            if cell == " ":  # Empty space
+                empty_positions.append((x, y))
+
+    random_positions = random.sample(empty_positions, min(num_items, len(empty_positions)))
+
+    maze_with_c = []
+    for y, row in enumerate(maze):
+        row_list = list(row)
+        for x, cell in enumerate(row_list):
+            if (x, y) in random_positions:
+                row_list[x] = "C"
+        maze_with_c.append("".join(row_list))
+
+    return maze_with_c
+
+# Function to reset the game
 def reset_game(level_index=0):
-    global marble_pos, start_ticks, score, speed, current_level
+    global marble_pos, start_ticks, score, speed, current_level, mazes
     marble_pos = [CELL_SIZE * 3 + CELL_SIZE // 2, CELL_SIZE * 1 + CELL_SIZE // 2]
     start_ticks = pygame.time.get_ticks()
     score = 0
     speed = BASE_SPEED
     current_level = level_index
+    mazes[current_level] = randomize_c_positions(mazes[current_level], num_items=5)
 
 reset_game()
 
@@ -90,7 +112,7 @@ def draw_maze():
         for x, cell in enumerate(row):
             rect = (x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE)
             if cell == "#":
-                pygame.draw.rect(screen, BLACK, rect)          #This part translates the appearance of the code to what is demonstrated in the picture instead of just # signs
+                pygame.draw.rect(screen, BLACK, rect)
             elif cell == "G":
                 pygame.draw.rect(screen, GREEN, rect)
             elif cell == "C":
@@ -98,24 +120,19 @@ def draw_maze():
 
 # Function to draw a gradient circle to simulate a sphere
 def draw_sphere(position):
-    # Draw gradient circles to create a 3D effect with dark outside and light inside
     for i in range(MARBLE_RADIUS, 0, -1):
-        # Calculate the color value based on the radius
-        color_value = int(255 * ((MARBLE_RADIUS - i) / MARBLE_RADIUS))  # Darker on the outside
-        color = (255, color_value, color_value)  # Full pink with varying shades
+        color_value = int(255 * ((MARBLE_RADIUS - i) / MARBLE_RADIUS))
+        color = (255, color_value, color_value)
         pygame.draw.circle(screen, color, (position[0], position[1]), i)
 
 # Check for collisions with walls
 def is_collision(position):
     x, y = position
-
-    # To restricts the marble's position to remain within the screen boundaries
     if x - MARBLE_RADIUS < 0 or x + MARBLE_RADIUS >= WIDTH:
         return True
     if y - MARBLE_RADIUS < 0 or y + MARBLE_RADIUS >= HEIGHT:
         return True
 
-    # Check for collisions with walls
     for dx in [-MARBLE_RADIUS, MARBLE_RADIUS]:
         for dy in [-MARBLE_RADIUS, MARBLE_RADIUS]:
             edge_x = (x + dx) // CELL_SIZE
@@ -125,29 +142,31 @@ def is_collision(position):
                 continue
             if edge_x < 0 or edge_x >= len(mazes[current_level][0]):
                 continue
-            # Check if the cell is a wall
             if mazes[current_level][edge_y][edge_x] == "#":
                 return True
     return False
 
+# Function to check if the marble reached the goal
 def check_goal(position):
-    x,y = position
+    x, y = position
     cell_x, cell_y = x // CELL_SIZE, y // CELL_SIZE
     return mazes[current_level][cell_y][cell_x] == "G"
 
+# Function to collect items
 def collect_items(position):
     global score
-    x,y = position
+    x, y = position
     cell_x, cell_y = x // CELL_SIZE, y // CELL_SIZE
 
     if mazes[current_level][cell_y][cell_x] == "C":
-        mazes[current_level][cell_y] = (
-            mazes[current_level][cell_y][:cell_x] + " " + mazes[current_level][cell_y][cell_x + 1]
-        )
+        row = list(mazes[current_level][cell_y])
+        row[cell_x] = " "
+        mazes[current_level][cell_y] = "".join(row)
         score += 1
         return True
     return False
 
+# Function to display the end screen
 def display_end_screen(message):
     screen.fill(WHITE)
     end_text = font.render(message, True, RED)
@@ -172,7 +191,7 @@ def display_end_screen(message):
 
 # Main game loop
 def main():
-    global marble_pos, score, speed, current_level  # Declare marble_pos, score, speed, current_level as global
+    global marble_pos, score, speed, current_level
 
     while True:
         for event in pygame.event.get():
@@ -184,9 +203,8 @@ def main():
         remaining_time = max(LEVEL_TIME - elapsed_time, 0)
 
         if remaining_time == 0:
-            display_end_screen(f"Oh boy! Time's up! Final score: {score}")
+            display_end_screen(f"Time's up! Final score: {score}")
 
-        # the keys to control the sphere
         keys = pygame.key.get_pressed()
         new_marble_pos = marble_pos.copy()
 
@@ -199,7 +217,6 @@ def main():
         if keys[pygame.K_DOWN]:
             new_marble_pos[1] += SPEED
 
-        # Check for collision before updating position
         if not is_collision(new_marble_pos):
             marble_pos = new_marble_pos
 
@@ -209,14 +226,11 @@ def main():
         if check_goal(marble_pos):
             current_level += 1
             if current_level >= len(mazes):
-                display_end_screen(f"Game over! Final score: {score}")
+                display_end_screen(f"Congratulations! Final score: {score}")
             else:
                 reset_game(current_level)
 
-        # Clear the screen
         screen.fill(WHITE)
-
-        # Draw the maze and the marble
         draw_maze()
         draw_sphere(marble_pos)
 
@@ -227,9 +241,8 @@ def main():
         screen.blit(score_text, (10, 50))
         screen.blit(level_text, (10, 90))
 
-        # Update the display
         pygame.display.flip()
         pygame.time.Clock().tick(60)
 
 if __name__ == "__main__":
-    main() 
+    main()
