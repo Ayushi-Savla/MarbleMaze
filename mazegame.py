@@ -251,7 +251,7 @@ def draw_maze():
 
 def is_collision(position):
     x, y = position
-    margin = MOUSE_SIZE - 5
+    margin = MOUSE_SIZE - 10
 
     check_points = [
         (x - margin, y - margin),
@@ -264,10 +264,18 @@ def is_collision(position):
         cell_x = int(check_x // CELL_SIZE)
         cell_y = int(check_y // CELL_SIZE)
 
-        if cell_y < 0 or cell_y >= len(mazes[current_level]) or \
-                cell_x < 0 or cell_x >= len(mazes[current_level][0]) or \
-                mazes[current_level][cell_y][cell_x] == "#":
+        if (
+            cell_y < 0 or cell_y >= len(mazes[current_level]) or
+            cell_x < 0 or cell_x >= len(mazes[current_level][0])
+        ):
+            print("Collision: Out of bounds")
             return True
+
+        cell = mazes[current_level][cell_y][cell_x]
+
+        if cell == "#":
+            return True
+
     return False
 
 
@@ -349,18 +357,24 @@ def main():
         if keys[pygame.K_LEFT]:
             new_pos[0] -= SPEED
             mouse_direction = [-1, 0]
-        if keys[pygame.K_RIGHT]:
+        elif keys[pygame.K_RIGHT]:
             new_pos[0] += SPEED
             mouse_direction = [1, 0]
-        if keys[pygame.K_UP]:
+        elif keys[pygame.K_UP]:
             new_pos[1] -= SPEED
             mouse_direction = [0, -1]
-        if keys[pygame.K_DOWN]:
+        elif keys[pygame.K_DOWN]:
             new_pos[1] += SPEED
             mouse_direction = [0, 1]
 
+        print(f"New position: {new_pos}")
+
         if not is_collision(new_pos):
             mouse_pos = new_pos
+            print(f"Updated position: {mouse_pos}")
+
+        else:
+            print("Collision detected, movement blocked")
 
         if collect_items(mouse_pos):
             score += 1
