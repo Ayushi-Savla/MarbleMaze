@@ -13,6 +13,8 @@ MOUSE_SIZE = 25  # Increased size for better Jerry appearance
 SPEED = 5
 BASE_SPEED = 5
 LEVEL_TIME = 60
+ball_size=15
+player_pos = [CELL_SIZE + CELL_SIZE // 2, CELL_SIZE + CELL_SIZE // 2]
 
 # Colors
 BLACK = (0, 0, 0)
@@ -85,6 +87,9 @@ mazes = [
         "###################",
     ]
 ]
+
+def draw_ball():
+    pygame.draw.circle(screen, GREEN, (int(player_pos[0]), int(player_pos[1])), ball_size)
 
 
 def draw_mouse(pos, direction):

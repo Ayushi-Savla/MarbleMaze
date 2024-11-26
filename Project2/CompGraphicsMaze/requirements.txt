@@ -1,0 +1,4 @@
+pygame~=2.6.1
+PyGLM
+PyOpenGL~=3.1.7
+esper~=2.5
