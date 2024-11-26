@@ -93,7 +93,7 @@ def draw_ball():
 
 
 def draw_mouse(pos, direction):
-    """Draw a Jerry-style mouse with characteristic round ears and cartoon features"""
+    """Draw a Jerry -style mouse with characteristic round ears and cartoon features"""
     x, y = pos
 
     # Body (rounder for cartoon look)
