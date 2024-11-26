@@ -1,5 +1,7 @@
 # MARBLE MAZE
 ![Screenshot (116)](https://github.com/user-attachments/assets/d1081160-6793-4aff-ad58-c85d4500c9a0)
+![image](https://github.com/user-attachments/assets/2283352d-cb88-4577-bda3-85f969ac5c3d)
+
 # What it does
 This game is a simple maze navigation game called "Marble Maze." The player controls a marble and navigates it through a maze. The goal is to move the marble around the maze without colliding with walls.
 # Dependencies
